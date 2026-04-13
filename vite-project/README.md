@@ -1,5 +1,26 @@
 # React + Vite
 
+This project is built with Vite and React. Start the dev server and open the local URL below.
+
+## Quick Start
+
+```bash
+npm install
+npm run dev
+```
+
+Open your browser at:
+
+`http://localhost:5173/`
+
+If the server is not exposed on the network, start with host binding:
+
+```bash
+npm run dev -- --host
+```
+
+---
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:

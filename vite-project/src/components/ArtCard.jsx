@@ -2,7 +2,8 @@ import { motion } from 'framer-motion';
 import { useState } from 'react';
 import ImageSkeleton from './ImageSkeleton';
 
-export default function ArtCard({ image, title, artist, index, onClick }) {
+export default function ArtCard({ data, index, onClick }) {
+  const { image, title, artist } = data;
   const [isHovered, setIsHovered] = useState(false);
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
@@ -45,7 +46,10 @@ export default function ArtCard({ image, title, artist, index, onClick }) {
       variants={cardVariants}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      onClick={() => onClick?.({ image, title, artist })}
+      onClick={() => onClick?.(data)}
+      whileHover={{ y: -10, scale: 1.02 }}
+      whileTap={{ scale: 0.99 }}
+      transition={{ type: 'spring', stiffness: 240, damping: 22 }}
       className="cursor-pointer group relative h-full"
     >
       <div
@@ -69,12 +73,8 @@ export default function ArtCard({ image, title, artist, index, onClick }) {
             loading="lazy"
             onLoad={handleImageLoad}
             onError={handleImageError}
-            className={`
-              w-full h-full object-cover
-              transition-transform duration-500
-              ${isHovered ? 'scale-125' : 'scale-100'}
-              ${!isImageLoaded ? 'opacity-0' : 'opacity-100'}
-            `}
+            whileHover={{ scale: 1.08 }}
+            className={`w-full h-full object-cover transition-all duration-500 ${!isImageLoaded ? 'opacity-0' : 'opacity-100'}`}
             initial={{ opacity: 0 }}
             animate={isImageLoaded ? { opacity: 1 } : { opacity: 0 }}
             transition={{ duration: 0.4 }}

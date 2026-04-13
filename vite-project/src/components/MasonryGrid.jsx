@@ -71,9 +71,7 @@ export default function MasonryGrid({ items, onCardClick, onLoadMore }) {
         {items.map((item, index) => (
           <ArtCard
             key={item.id || index}
-            image={item.image}
-            title={item.title}
-            artist={item.artist}
+            data={item}
             index={index}
             onClick={onCardClick}
           />

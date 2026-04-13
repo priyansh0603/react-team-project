@@ -3,6 +3,7 @@ import Sidebar from './components/Sidebar';
 import TopNav from './components/TopNav';
 import MasonryGrid from './components/MasonryGrid';
 import Modal from './components/Modal';
+import PageTransition from './components/PageTransition';
 import './components/MasonryGrid.css';
 
 // Sample artwork data with varied dimensions
@@ -11,73 +12,109 @@ const SAMPLE_ARTWORKS = [
     id: 1,
     title: 'Ethereal Dreams',
     artist: 'Aurora Studio',
-    image: 'https://images.unsplash.com/photo-1579783902614-e3fb5141b0cb?w=400&h=500&fit=crop',
+    history: 'Aurora Studio blends cinematic light with soft textures, creating immersive works that feel like moving memories.',
+    medium: 'Mixed Media',
+    year: '2024',
+    image: 'https://images.unsplash.com/photo-1579783902614-e3fb5141b0cb?w=800&h=1000&fit=crop',
   },
   {
     id: 2,
     title: 'Urban Canvas',
     artist: 'City Collective',
-    image: 'https://images.unsplash.com/photo-1561214115-6d2f1b0609fa?w=400&h=300&fit=crop',
+    history: 'City Collective captures the pulse of modern architecture through bold contrast and urban minimalism.',
+    medium: 'Digital Collage',
+    year: '2024',
+    image: 'https://images.unsplash.com/photo-1561214115-6d2f1b0609fa?w=800&h=600&fit=crop',
   },
   {
     id: 3,
     title: 'Sunset Horizons',
     artist: 'Nature\'s Palette',
-    image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&h=600&fit=crop',
+    history: 'Nature’s Palette explores the ephemeral beauty of evening skies with elegant gradients and subtle detail.',
+    medium: 'Acrylic',
+    year: '2024',
+    image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&h=1200&fit=crop',
   },
   {
     id: 4,
     title: 'Abstract Geometry',
     artist: 'Modern Minds',
-    image: 'https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=400&h=400&fit=crop',
+    history: 'Modern Minds reimagines geometry as tactile motion, balancing structure and spatial rhythm.',
+    medium: 'Oil on Canvas',
+    year: '2023',
+    image: 'https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=800&h=800&fit=crop',
   },
   {
     id: 5,
     title: 'Nocturne Blue',
     artist: 'Mystic Visions',
-    image: 'https://images.unsplash.com/photo-1578321272176-b8ec1c5e5d1c?w=400&h=500&fit=crop',
+    history: 'Mystic Visions creates nocturnal landscapes with dreamlike depth and luminous contrast.',
+    medium: 'Photography',
+    year: '2024',
+    image: 'https://images.unsplash.com/photo-1578321272176-b8ec1c5e5d1c?w=800&h=1000&fit=crop',
   },
   {
     id: 6,
     title: 'Color Symphony',
     artist: 'Vibrant Soul',
-    image: 'https://images.unsplash.com/photo-1577720643272-265b434c0e0c?w=400&h=350&fit=crop',
+    history: 'Vibrant Soul composes color harmonies that feel orchestrated and alive on the canvas.',
+    medium: 'Watercolor',
+    year: '2024',
+    image: 'https://images.unsplash.com/photo-1577720643272-265b434c0e0c?w=800&h=700&fit=crop',
   },
   {
     id: 7,
     title: 'Minimalist Space',
     artist: 'Zen Studio',
-    image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&h=500&fit=crop',
+    history: 'Zen Studio pares design to its essentials, crafting thoughtful negative space and calm tension.',
+    medium: 'Ink & Wash',
+    year: '2024',
+    image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&h=1000&fit=crop',
   },
   {
     id: 8,
     title: 'Electric Energy',
     artist: 'Pulse Art',
-    image: 'https://images.unsplash.com/photo-1561214115-6d2f1b0609fa?w=400&h=400&fit=crop',
+    history: 'Pulse Art harnesses kinetic motion through saturated color and dynamic light streaks.',
+    medium: 'Mixed Media',
+    year: '2024',
+    image: 'https://images.unsplash.com/photo-1561214115-6d2f1b0609fa?w=800&h=800&fit=crop',
   },
   {
     id: 9,
     title: 'Serene Reflection',
     artist: 'Calm Waves',
-    image: 'https://images.unsplash.com/photo-1579783902614-e3fb5141b0cb?w=400&h=450&fit=crop',
+    history: 'Calm Waves captures quiet horizon moments with soft gradients and refined tonal balance.',
+    medium: 'Digital Painting',
+    year: '2024',
+    image: 'https://images.unsplash.com/photo-1579783902614-e3fb5141b0cb?w=800&h=900&fit=crop',
   },
   {
     id: 10,
     title: 'Dynamic Motion',
     artist: 'Flow Studios',
-    image: 'https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=400&h=500&fit=crop',
+    history: 'Flow Studios explores fluid movement across edges, turning stillness into cinematic energy.',
+    medium: 'Acrylic',
+    year: '2024',
+    image: 'https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=800&h=1000&fit=crop',
   },
   {
     id: 11,
     title: 'Golden Hour',
     artist: 'Light Masters',
-    image: 'https://images.unsplash.com/photo-1578321272176-b8ec1c5e5d1c?w=400&h=300&fit=crop',
+    history: 'Light Masters studies warm light and metallic reflection to create luminous, elegant imagery.',
+    medium: 'Photography',
+    year: '2023',
+    image: 'https://images.unsplash.com/photo-1578321272176-b8ec1c5e5d1c?w=800&h=600&fit=crop',
   },
   {
     id: 12,
     title: 'Cosmic Wonder',
     artist: 'Space Echoes',
-    image: 'https://images.unsplash.com/photo-1577720643272-265b434c0e0c?w=400&h=500&fit=crop',
+    history: 'Space Echoes explores cosmic forms with deep contrast and polished, modern composition.',
+    medium: 'Digital Art',
+    year: '2024',
+    image: 'https://images.unsplash.com/photo-1577720643272-265b434c0e0c?w=800&h=1000&fit=crop',
   },
 ];
 
@@ -131,21 +168,17 @@ function App() {
 
   const handleCloseModal = () => {
     setModalOpen(false);
-    setTimeout(() => setSelectedArt(null), 300);
+    setTimeout(() => setSelectedArt(null), 420);
   };
 
   return (
-    <div className="min-h-screen bg-primary-bg">
-      {/* Sidebar Navigation */}
+    <div className="min-h-screen bg-primary-bg text-white">
       <Sidebar />
-
-      {/* Top Navigation */}
       <TopNav onSearch={setSearchQuery} />
 
-      {/* Main Content Area */}
-      <main className="ml-72 pt-24 pb-12 px-4 sm:px-6 lg:px-8">
-        {/* Results Info */}
-        <div className="mb-8">
+      <PageTransition pageKey="gallery-page">
+        <main className="ml-72 pt-24 pb-12 px-4 sm:px-6 lg:px-8">
+          <div className="mb-8">
           <p className="text-gray-400 text-sm">
             {filteredArtworks.length} artwork{filteredArtworks.length !== 1 ? 's' : ''} found
             {searchQuery && ` for "${searchQuery}"`}
@@ -177,6 +210,7 @@ function App() {
           </div>
         )}
       </main>
+      </PageTransition>
 
       {/* Modal for Art Details */}
       <Modal isOpen={modalOpen} data={selectedArt} onClose={handleCloseModal} />
