@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 import { useState } from 'react';
 
 export default function TopNav({ onSearch }) {
@@ -13,15 +12,11 @@ export default function TopNav({ onSearch }) {
   return (
     <nav className="fixed top-0 left-72 right-0 h-20 bg-primary-bg/80 backdrop-blur-xl border-b border-primary-accent/10 flex items-center justify-between px-8 z-40">
       {/* Left Section - Title */}
-      <motion.div
-        initial={{ opacity: 0, x: -20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.6 }}
-      >
+      <div>
         <h2 className="text-2xl font-light text-white">
           Artworks <span className="text-primary-accent font-medium">Collection</span>
         </h2>
-      </motion.div>
+      </div>
 
       {/* Center Section - Search Bar */}
       <div className="flex-1 max-w-md mx-8">
@@ -40,11 +35,7 @@ export default function TopNav({ onSearch }) {
               backdrop-blur-sm
             "
           />
-          <motion.div
-            className="absolute inset-0 rounded-full bg-gradient-to-r from-primary-accent/10 to-transparent pointer-events-none"
-            initial={{ opacity: 0 }}
-            whileFocus={{ opacity: 1 }}
-          />
+          <div className="absolute inset-0 rounded-full bg-gradient-to-r from-primary-accent/10 to-transparent pointer-events-none opacity-0 group-focus-within:opacity-100 transition-opacity" />
           <span className="absolute right-4 top-1/2 -translate-y-1/2 text-primary-accent">
             🔍
           </span>
@@ -52,19 +43,14 @@ export default function TopNav({ onSearch }) {
       </div>
 
       {/* Right Section - Action Buttons */}
-      <motion.div
-        className="flex items-center gap-4"
-        initial={{ opacity: 0, x: 20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.6, delay: 0.2 }}
-      >
+      <div className="flex items-center gap-4">
         <button className="px-6 py-2 rounded-full text-sm font-medium text-white hover:text-primary-accent transition-colors duration-300">
           Filters
         </button>
         <button className="px-6 py-2 rounded-full text-sm font-medium text-primary-bg bg-primary-accent hover:bg-yellow-300 transition-colors duration-300">
           Favorites
         </button>
-      </motion.div>
+      </div>
     </nav>
   );
 }

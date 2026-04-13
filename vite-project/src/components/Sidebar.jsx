@@ -1,18 +1,13 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
-
 const menuItems = [
-  { id: 1, label: 'Gallery', icon: '🖼️' },
-  { id: 2, label: 'Collections', icon: '📚' },
-  { id: 3, label: 'Artists', icon: '👨‍🎨' },
-  { id: 4, label: 'Exhibitions', icon: '🎭' },
-  { id: 5, label: 'About', icon: 'ℹ️' },
-  { id: 6, label: 'Contact', icon: '✉️' },
+  { id: 'gallery', label: 'Gallery', icon: '🖼️' },
+  { id: 'collections', label: 'Collections', icon: '📚' },
+  { id: 'artists', label: 'Artists', icon: '👨‍🎨' },
+  { id: 'exhibitions', label: 'Exhibitions', icon: '🎭' },
+  { id: 'about', label: 'About', icon: 'ℹ️' },
+  { id: 'contact', label: 'Contact', icon: '✉️' },
 ];
 
-export default function Sidebar() {
-  const [activeId, setActiveId] = useState(1);
-
+export default function Sidebar({ activeView = 'gallery', onViewChange }) {
   return (
     <aside className="fixed left-0 top-0 h-screen w-72 bg-primary-bg border-r border-primary-accent/20 flex flex-col p-8 z-40">
       {/* Logo / Branding */}
@@ -30,18 +25,13 @@ export default function Sidebar() {
         <ul className="space-y-3">
           {menuItems.map((item) => (
             <li key={item.id}>
-              <motion.button
-                onClick={() => setActiveId(item.id)}
+              <button
+                onClick={() => onViewChange?.(item.id)}
                 className="relative w-full text-left px-4 py-3 rounded-lg transition-all duration-300 group"
-                whileHover={{ x: 4 }}
               >
                 {/* Active Background */}
-                {activeId === item.id && (
-                  <motion.div
-                    layoutId="activeBackground"
-                    className="absolute inset-0 bg-primary-accent/10 rounded-lg"
-                    transition={{ duration: 0.3 }}
-                  />
+                {activeView === item.id && (
+                  <div className="absolute inset-0 bg-primary-accent/10 rounded-lg" />
                 )}
 
                 {/* Content */}
@@ -49,7 +39,7 @@ export default function Sidebar() {
                   <span className="text-xl">{item.icon}</span>
                   <span
                     className={`font-medium transition-colors duration-300 ${
-                      activeId === item.id
+                      activeView === item.id
                         ? 'text-primary-accent'
                         : 'text-gray-300 group-hover:text-white'
                     }`}
@@ -59,17 +49,15 @@ export default function Sidebar() {
                 </div>
 
                 {/* Gold Indicator Line */}
-                {activeId === item.id && (
-                  <motion.div
-                    layoutId="activeIndicator"
+                {activeView === item.id && (
+                  <div
                     className="absolute right-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-primary-accent rounded-l-full"
-                    transition={{ duration: 0.3 }}
                     style={{
                       boxShadow: '0 0 15px rgba(212, 175, 55, 0.6)',
                     }}
                   />
                 )}
-              </motion.button>
+              </button>
             </li>
           ))}
         </ul>

@@ -1,96 +1,72 @@
-import { motion } from 'framer-motion';
 import { useState } from 'react';
 import ImageSkeleton from './ImageSkeleton';
 
-export default function ArtCard({ data, index, onClick }) {
-  const { image, title, artist } = data;
+const FALLBACK_IMAGE = 'https://via.placeholder.com/400x500/1A1A1A/D4AF37?text=Art';
+
+export default function ArtCard({ image, title, artist, index, onClick }) {
   const [isHovered, setIsHovered] = useState(false);
   const [isImageLoaded, setIsImageLoaded] = useState(false);
-  const [imageError, setImageError] = useState(false);
-
-  const cardVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: (i) => ({
-      opacity: 1,
-      y: 0,
-      transition: {
-        delay: Math.min(i * 0.08, 0.6), // Cap stagger delay
-        duration: 0.6,
-        ease: 'easeOut',
-      },
-    }),
-  };
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1 },
-    },
-  };
+  const imageSrc = image || FALLBACK_IMAGE;
 
   const handleImageLoad = () => {
     setIsImageLoaded(true);
   };
 
   const handleImageError = () => {
-    setImageError(true);
     setIsImageLoaded(true);
   };
 
   return (
-    <motion.div
-      custom={index}
-      initial="hidden"
-      animate="visible"
-      variants={cardVariants}
+    <div
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      onClick={() => onClick?.(data)}
-      whileHover={{ y: -10, scale: 1.02 }}
-      whileTap={{ scale: 0.99 }}
-      transition={{ type: 'spring', stiffness: 240, damping: 22 }}
-      className="cursor-pointer group relative h-full"
+      onClick={() => onClick?.({ image: imageSrc, title, artist, index })}
+      className="cursor-pointer group relative"
     >
       <div
         className={`
-          relative overflow-hidden rounded-2xl bg-primary-card
-          transition-all duration-500 h-full
+          overflow-hidden rounded-2xl bg-primary-card
+          transition-all duration-500
           ${isHovered ? 'shadow-gold-glow-lg' : 'shadow-lg'}
         `}
       >
         {/* Image Container */}
-        <div className="relative w-full h-full overflow-hidden bg-primary-dark group/image">
+        <div className="relative w-full min-h-[260px] aspect-[3/4] overflow-hidden bg-primary-dark group/image">
           {/* Show skeleton while loading */}
-          {!isImageLoaded && !imageError && (
+          {!isImageLoaded && (
             <ImageSkeleton />
           )}
 
           {/* Image with lazy loading */}
-          <motion.img
-            src={image || 'https://via.placeholder.com/400x500/1A1A1A/D4AF37?text=Art'}
+          <img
+            src={imageSrc}
             alt={title}
             loading="lazy"
             onLoad={handleImageLoad}
-            onError={handleImageError}
-            whileHover={{ scale: 1.08 }}
-            className={`w-full h-full object-cover transition-all duration-500 ${!isImageLoaded ? 'opacity-0' : 'opacity-100'}`}
-            initial={{ opacity: 0 }}
-            animate={isImageLoaded ? { opacity: 1 } : { opacity: 0 }}
-            transition={{ duration: 0.4 }}
+            onError={(event) => {
+              event.currentTarget.onerror = null;
+              event.currentTarget.src = FALLBACK_IMAGE;
+              handleImageError();
+            }}
+            className={`
+              w-full h-full object-cover
+              transition-transform duration-500
+              ${isHovered ? 'scale-105' : 'scale-100'}
+              ${!isImageLoaded ? 'opacity-0' : 'opacity-100'}
+            `}
           />
 
           {/* Overlay Gradient */}
-          <motion.div
+          <div
             className={`
               absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent
               transition-opacity duration-500
-              ${isHovered ? 'opacity-85' : 'opacity-40'}
+              ${isHovered ? 'opacity-65' : 'opacity-30'}
             `}
           />
 
           {/* Golden Accent Line */}
-          <motion.div
+          <div
             className={`
               absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-primary-accent to-transparent
               transition-all duration-500
@@ -102,43 +78,24 @@ export default function ArtCard({ data, index, onClick }) {
           />
         </div>
 
-        {/* Content Overlay */}
-        <motion.div 
-          className="absolute inset-0 flex flex-col justify-end p-6"
-          variants={containerVariants}
-        >
-          {/* Title and Artist - Always visible */}
-          <motion.div className="mb-3">
-            <h3 className="text-base font-semibold text-white line-clamp-2">
-              {title}
-            </h3>
-            <p className="text-sm text-primary-accent font-medium mt-1">
-              {artist}
-            </p>
-          </motion.div>
+        <div className="p-4">
+          <div className="mb-3">
+            <h3 className="text-base font-semibold text-white line-clamp-2">{title}</h3>
+            <p className="text-sm text-primary-accent font-medium mt-1 line-clamp-1">{artist}</p>
+          </div>
 
-          {/* Details - Appear on hover */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={isHovered ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-            transition={{ duration: 0.3, ease: 'easeOut' }}
+          <button
+            className="
+              w-full py-2.5 px-4 rounded-lg font-medium
+              bg-primary-accent text-primary-bg
+              hover:bg-yellow-300 transition-all duration-300
+              text-sm uppercase tracking-widest
+            "
           >
-            <motion.button
-              className={`
-                w-full py-2.5 px-4 rounded-lg font-medium
-                bg-primary-accent text-primary-bg
-                hover:bg-yellow-300 transition-all duration-300
-                text-sm uppercase tracking-widest
-                transform origin-center
-              `}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              View Details
-            </motion.button>
-          </motion.div>
-        </motion.div>
+            View Details
+          </button>
+        </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
