@@ -146,7 +146,7 @@ function App() {
   };
 
   return (
-    <div className="app-shell">
+    <div className={`app-shell ${activeTab === 'videos' ? 'videos-theme' : 'products-theme'}`}>
       <div className="bg-orb orb-a" />
       <div className="bg-orb orb-b" />
       <div className="bg-orb orb-c" />

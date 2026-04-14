@@ -5,6 +5,44 @@
   padding-bottom: 2rem;
 }
 
+.app-shell.products-theme {
+  --bg-primary: #fefaf7;
+  --bg-secondary: rgba(255, 247, 241, 0.8);
+  --bg-tertiary: rgba(255, 234, 220, 0.82);
+  --bg-card: rgba(255, 255, 255, 0.88);
+  --navbar-bg: rgba(255, 241, 231, 0.78);
+  --navbar-border: rgba(189, 132, 102, 0.24);
+  --text-primary: #4d3a34;
+  --text-secondary: #644b43;
+  --text-muted: #81655c;
+  --border-color: rgba(189, 132, 102, 0.18);
+  --accent-primary: #e6a57e;
+  --accent-secondary: #d88cb2;
+  --accent-glow: rgba(216, 140, 178, 0.26);
+  --gradient-primary: linear-gradient(135deg, #e6a57e 0%, #d88cb2 100%);
+  --gradient-secondary: linear-gradient(135deg, #f2bf9e 0%, #e39ec0 100%);
+  --gradient-accent: linear-gradient(135deg, #d88cb2 0%, #e6a57e 100%);
+}
+
+.app-shell.videos-theme {
+  --bg-primary: #f6fbff;
+  --bg-secondary: rgba(239, 248, 255, 0.84);
+  --bg-tertiary: rgba(227, 241, 255, 0.84);
+  --bg-card: rgba(255, 255, 255, 0.9);
+  --navbar-bg: rgba(227, 241, 255, 0.8);
+  --navbar-border: rgba(110, 149, 189, 0.24);
+  --text-primary: #324456;
+  --text-secondary: #435a70;
+  --text-muted: #62798f;
+  --border-color: rgba(110, 149, 189, 0.2);
+  --accent-primary: #7aa9d8;
+  --accent-secondary: #9ec5a4;
+  --accent-glow: rgba(122, 169, 216, 0.28);
+  --gradient-primary: linear-gradient(135deg, #7aa9d8 0%, #9ec5a4 100%);
+  --gradient-secondary: linear-gradient(135deg, #8eb6de 0%, #a8cfb0 100%);
+  --gradient-accent: linear-gradient(135deg, #9ec5a4 0%, #7aa9d8 100%);
+}
+
 .bg-orb {
   position: fixed;
   border-radius: 50%;
@@ -17,7 +55,7 @@
 .orb-a {
   width: 380px;
   height: 380px;
-  background: #60a5fa;
+  background: color-mix(in srgb, var(--accent-primary) 70%, #ffffff);
   top: -130px;
   left: -80px;
 }
@@ -25,7 +63,7 @@
 .orb-b {
   width: 440px;
   height: 440px;
-  background: #c084fc;
+  background: color-mix(in srgb, var(--accent-secondary) 75%, #ffffff);
   top: 25%;
   right: -160px;
   animation-delay: 1.8s;
@@ -34,7 +72,7 @@
 .orb-c {
   width: 360px;
   height: 360px;
-  background: #f472b6;
+  background: color-mix(in srgb, var(--accent-primary) 50%, var(--accent-secondary));
   bottom: -170px;
   left: 25%;
   animation-delay: 4s;
