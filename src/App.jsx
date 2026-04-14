@@ -11,8 +11,8 @@ import { useProducts } from './hooks/useProducts';
 const SKELETON_COUNT = 8;
 
 function App() {
-  const [activeTab, setActiveTab] = useState('videos');
-  const [searchQuery, setSearchQuery] = useState('react js');
+  const [activeTab, setActiveTab] = useState('products');
+  const [searchQuery, setSearchQuery] = useState('');
   const [productFilter, setProductFilter] = useState('');
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -20,7 +20,7 @@ function App() {
 
   useEffect(() => {
     const timerId = setTimeout(() => {
-      setDebouncedQuery(searchQuery.trim() || 'react js');
+      setDebouncedQuery(searchQuery.trim());
     }, 450);
 
     return () => clearTimeout(timerId);
@@ -52,6 +52,15 @@ function App() {
   }, [products, productFilter]);
 
   const renderVideoState = () => {
+    if (!debouncedQuery) {
+      return (
+        <div className="state-card">
+          <h3>Search to load videos</h3>
+          <p>Type a keyword in search to fetch YouTube results and save API quota.</p>
+        </div>
+      );
+    }
+
     if (videosLoading) {
       return (
         <div>
@@ -80,6 +89,15 @@ function App() {
           <button className="action-btn" onClick={refetchVideos}>
             Retry videos
           </button>
+        </div>
+      );
+    }
+
+    if (!videos.length) {
+      return (
+        <div className="state-card">
+          <h3>No videos found</h3>
+          <p>Try another keyword to get more results.</p>
         </div>
       );
     }

@@ -3,9 +3,9 @@ import { useState, useEffect, useCallback } from 'react';
 const API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY || '';
 const CACHE_DURATION = 5 * 60 * 1000;
 
-export const useYouTubeVideos = (searchQuery = 'programming tutorials') => {
+export const useYouTubeVideos = (searchQuery = '') => {
   const [videos, setVideos] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const fetchVideos = useCallback(async (query) => {
@@ -69,7 +69,15 @@ export const useYouTubeVideos = (searchQuery = 'programming tutorials') => {
   }, []);
 
   useEffect(() => {
-    fetchVideos(searchQuery);
+    const normalizedQuery = (searchQuery || '').trim();
+    if (!normalizedQuery) {
+      setVideos([]);
+      setError(null);
+      setLoading(false);
+      return;
+    }
+
+    fetchVideos(normalizedQuery);
   }, [fetchVideos, searchQuery]);
 
   const refetch = useCallback(() => {
